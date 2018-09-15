@@ -1,0 +1,406 @@
+﻿<Window x:Class="EuroBakerieAPp.Windows.Customer_Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EuroBakerieAPp.Windows"
+        mc:Ignorable="d"
+        Title="Euro Bakerie Customers" Height="450" Width="678.5" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
+    <Window.Resources>
+        <!--Placeholder Text for TBX-->
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="#FF557598"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Style for CBX-->
+        <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFF" Offset="0.0"/>
+                    <GradientStop Color="#CCC" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HorizontalNormalBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFF" Offset="0.0"/>
+                    <GradientStop Color="#CCC" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="LightBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFF" Offset="0.0"/>
+                    <GradientStop Color="#EEE" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HorizontalLightBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFF" Offset="0.0"/>
+                    <GradientStop Color="#EEE" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DarkBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FF557598" Offset="0.0"/>
+                    <GradientStop Color="#FF557598" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#BBB" Offset="0.0"/>
+                    <GradientStop Color="#EEE" Offset="0.1"/>
+                    <GradientStop Color="#EEE" Offset="0.9"/>
+                    <GradientStop Color="#FFF" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+
+        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#EEE" />
+
+        <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
+
+        <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#DDD" />
+
+        <!-- Border Brushes -->
+
+        <LinearGradientBrush x:Key="NormalBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#CCC" Offset="0.0"/>
+                    <GradientStop Color="#444" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HorizontalNormalBorderBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#CCC" Offset="0.0"/>
+                    <GradientStop Color="#444" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DefaultedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#777" Offset="0.0"/>
+                    <GradientStop Color="#000" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PressedBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#444" Offset="0.0"/>
+                    <GradientStop Color="#888" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
+
+        <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+
+        <SolidColorBrush x:Key="LightBorderBrush" Color="#AAA" />
+
+        <!-- Miscellaneous Brushes -->
+        <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+
+        <SolidColorBrush x:Key="LightColorBrush" Color="#DDD" />
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border
+      x:Name="Border" 
+      Grid.ColumnSpan="2"
+      CornerRadius="0"
+      Background="#FF557598"
+      BorderThickness="0" />
+                <Border 
+      Grid.Column="0"
+      CornerRadius="0,0,0,0" 
+      Margin="1" 
+      Background="{StaticResource WindowBackgroundBrush}"
+      BorderThickness="0,0,0,0" />
+                <Path 
+      x:Name="Arrow"
+      Grid.Column="1"     
+      Fill="White"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Data="M 0 0 L 4 4 L 8 0 Z"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource DarkBrush}" />
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#FF557598" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                    <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource DisabledForegroundBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="ComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton 
+            Name="ToggleButton" 
+            Template="{StaticResource ComboBoxToggleButton}" 
+            Grid.Column="2" 
+            Focusable="false"
+            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter
+            Name="ContentSite"
+            IsHitTestVisible="False" 
+            Content="{TemplateBinding SelectionBoxItem}"
+            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+            Margin="3,3,23,3"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+            Style="{x:Null}" 
+            Template="{StaticResource ComboBoxTextBox}" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Margin="3,3,23,3"
+            Focusable="True" 
+            Background="Transparent"
+            Visibility="Hidden"
+            IsReadOnly="{TemplateBinding IsReadOnly}" BorderBrush="#FF557598"/>
+                            <Popup 
+            Name="Popup"
+            Placement="Bottom"
+            IsOpen="{TemplateBinding IsDropDownOpen}"
+            AllowsTransparency="True" 
+            Focusable="False"
+            PopupAnimation="Slide">
+                                <Grid 
+              Name="DropDown"
+              SnapsToDevicePixels="True"                
+              MinWidth="{TemplateBinding ActualWidth}"
+              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                x:Name="DropDownBorder"
+                Background="{StaticResource WindowBackgroundBrush}"
+                BorderThickness="1"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="4"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"
+               Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility"    Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="RemButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="1" BorderBrush="DarkRed" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border>
+        <Border.Background>
+            <ImageBrush ImageSource="/EuroBakerieAPp;component/Images/BG_2.jpg" Stretch="UniformToFill"/>
+        </Border.Background>
+        <Viewbox Stretch="Uniform" ScrollViewer.CanContentScroll="True">
+            <Grid>
+                <TabControl x:Name="tc_customer" Margin="0,-24,-0.333,-0.333" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Header="My Orders" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <Grid Margin="0,0,-2,0">
+                            <Grid HorizontalAlignment="Left" Height="79" Margin="-27,-19,-38,0" VerticalAlignment="Top" Width="736" Background="#FF557598">
+                                <ComboBox x:Name="cbx_Menu" HorizontalAlignment="Left" Margin="551,39,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderBrush="{x:Null}" SelectionChanged="cbx_Menu_SelectionChanged">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                            <GradientStop Color="White" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                    <Label Content="User Settings" Foreground="#FF0077FF"/>
+                                    <Label Content="Logout"/>
+                                </ComboBox>
+                                <Label x:Name="lbl_Welcome" Content="Welcome &lt;&gt;" HorizontalAlignment="Left" Margin="38,28,0,0" VerticalAlignment="Top" Height="41" Foreground="White" FontFamily="Century Gothic" FontWeight="Bold" FontSize="24"/>
+                            </Grid>
+
+
+                            <DataGrid x:Name="dg_CustomerOrders" HorizontalAlignment="Left" Height="277" Margin="10,93,0,0" VerticalAlignment="Top" Width="417" SelectionChanged="dg_CustomerOrders_SelectionChanged" IsReadOnly="True" BorderBrush="{x:Null}" Background="{x:Null}"/>
+                            <DatePicker x:Name="dp_CustOrders" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" SelectedDateChanged="dp_CustOrders_SelectedDateChanged"/>
+                            <Button x:Name="btn_Reset" Content="Reset" HorizontalAlignment="Left" Margin="117,69,0,0" VerticalAlignment="Top" Width="75" Click="btn_Reset_Click" BorderBrush="#FF6693DD" Background="{x:Null}" Foreground="#FF0068FF"/>
+                            <Grid x:Name="grid_add" HorizontalAlignment="Left" Height="167" Margin="436,76,0,0" VerticalAlignment="Top" Width="235" Background="#B2F7F7F7">
+                                <Grid HorizontalAlignment="Left" Height="151" Margin="10,0,0,0" VerticalAlignment="Top" Width="197">
+                                    <ComboBox x:Name="cbx_Products" HorizontalAlignment="Left" Margin="0,32,0,0" VerticalAlignment="Top" Width="196" Foreground="Black"/>
+                                    <Label Content="Product" HorizontalAlignment="Left" Margin="-4,6,0,0" VerticalAlignment="Top" Foreground="#FF0061BA"/>
+                                    <Label Content="Quantity" HorizontalAlignment="Left" Margin="-4,54,0,0" VerticalAlignment="Top" Foreground="#FF0061B1"/>
+                                    <TextBox x:Name="tbx_Quantity" HorizontalAlignment="Left" Height="22" Margin="0,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="TextBox_PreviewTextInput" BorderBrush="#FF557598"/>
+                                    <Button x:Name="btn_Add" Content="Add Order" Margin="-2,129,124,0" VerticalAlignment="Top" Click="btn_Add_Click" Background="White" BorderBrush="#FF557598" Foreground="#FF557598" Height="22"/>
+                                    <Label x:Name="lbl_SelDate" Content="" HorizontalAlignment="Left" Margin="0,102,0,0" VerticalAlignment="Top" Width="197" Height="31" FontSize="11"/>
+                                    <Label x:Name="lbl_Result" Content="" HorizontalAlignment="Left" Margin="73,126,-19,0" VerticalAlignment="Top" Width="143" FontSize="11"/>
+                                </Grid>
+                            </Grid>
+                            <Button x:Name="btn_Today" Content="Today" HorizontalAlignment="Left" Margin="197,69,0,0" VerticalAlignment="Top" Width="76" Click="btn_Today_Click" Background="{x:Null}" BorderBrush="#FF5186FF" Foreground="#FF4C7CDC"/>
+                            <Grid x:Name="grid_UpdateOrders" HorizontalAlignment="Left" Height="160" Margin="436,250,0,0" VerticalAlignment="Top" Width="235" Background="#B7F3F3F3">
+                                <ComboBox x:Name="cbx_UDProducts" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" Width="194" Foreground="Black"/>
+                                <Label x:Name="lbl_OrderlineID" Content="" HorizontalAlignment="Left" Margin="97,3,0,0" VerticalAlignment="Top" Width="100"/>
+                                <TextBox x:Name="tbx_Quantity1" HorizontalAlignment="Left" Height="28" Margin="10,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" PreviewTextInput="tbx_Quantity1_PreviewTextInput" BorderBrush="#FF557598"/>
+                                <Label x:Name="lbl_Udate" Content="Update Order" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_Save" Content="Update Order" HorizontalAlignment="Left" Margin="45,101,0,0" VerticalAlignment="Top" Width="120" Click="btn_Save_Click" Foreground="#FF557598" BorderBrush="#FF557598" Background="White" Height="28"/>
+                                <DatePicker x:Name="dp_UDOrder" HorizontalAlignment="Left" Margin="95,68,0,0" VerticalAlignment="Top" Width="109" Height="28" Text="Date" SelectedDateChanged="dp_UDOrders_SelectedDateChanged" BorderBrush="#FF557598" Background="White"/>
+                                <Label Content="Quantity" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbl_UOResult" Content="" HorizontalAlignment="Left" Margin="0,129,0,0" VerticalAlignment="Top" Width="230" FontSize="11"/>
+                            </Grid>
+                            <Label x:Name="lbl_Output" Content="" HorizontalAlignment="Left" Margin="173,370,0,0" VerticalAlignment="Top" Width="254" Height="30"/>
+                            <Button x:Name="btn_RemoveOrder" Content="Remove Selected Order" Style="{StaticResource RemButton}" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="158" Background="{x:Null}" BorderBrush="#FF7C0000" Foreground="#FFA90000" Height="21" Click="btn_RemoveOrder_Click">
+
+                            </Button>
+
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="My Profile" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <Grid Margin="0,0,-4,0">
+                            <Label x:Name="lbl_welcome" Content="Welcome, HUMAN" HorizontalAlignment="Left" Margin="122,154,0,0" VerticalAlignment="Top" Width="170" Height="31"/>
+                            <Image x:Name="img_pp" HorizontalAlignment="Left" Height="93" Margin="32,88,0,0" VerticalAlignment="Top" Width="76" Source="/EuroBakerieAPp;component/Images/profile.png" Stretch="Fill"/>
+                            <TextBox x:Name="tbx_Company" Style="{StaticResource placeHolder}" Tag="Company" HorizontalAlignment="Left" Height="23" Margin="106,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186"/>
+                            <TextBox x:Name="tbx_Contact" Style="{StaticResource placeHolder}" Tag="Contact" HorizontalAlignment="Left" Height="23" Margin="106,218,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186"/>
+                            <TextBox x:Name="tbx_address" Style="{StaticResource placeHolder}" Tag="Address" HorizontalAlignment="Left" Height="22" Margin="106,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="282"/>
+                            <Label Content="Company" HorizontalAlignment="Left" Margin="46,186,0,0" VerticalAlignment="Top" Width="63" Height="26"/>
+                            <Label Content="Contact" HorizontalAlignment="Left" Margin="56,214,0,0" VerticalAlignment="Top" Width="52" Height="23"/>
+                            <Label Content="Address" HorizontalAlignment="Left" Margin="55,242,0,0" VerticalAlignment="Top" Width="54" Height="28"/>
+                            <TextBox x:Name="tbx_PhoneNum" Style="{StaticResource placeHolder}" Tag="Phone Number" HorizontalAlignment="Left" Height="22" Margin="106,302,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186"/>
+                            <Label Content="Phone Number"  HorizontalAlignment="Left" Margin="16,298,0,0" VerticalAlignment="Top" Width="92" Height="26"/>
+                            <Label Content="Town" HorizontalAlignment="Left" Margin="69,270,0,0" VerticalAlignment="Top" Width="43" Height="32"/>
+                            <TextBox x:Name="tbx_town" Style="{StaticResource placeHolder}" Tag="Town" HorizontalAlignment="Left" Height="22" Margin="106,274,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="173"/>
+                            <TextBox x:Name="tbx_postcode" Style="{StaticResource placeHolder}" Tag="Postcode" HorizontalAlignment="Left" Height="22" Margin="284,274,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="104"/>
+                            <Button x:Name="btn_SaveCUstDetails" Content="Save" HorizontalAlignment="Left" Margin="106,329,0,0" VerticalAlignment="Top" Width="145" Height="28" Click="btn_SaveCUstDetails_Click" Background="{x:Null}" BorderBrush="#FF557598" Foreground="#FF557598"/>
+                            <Label x:Name="lbl_UsertabResult" Content="" HorizontalAlignment="Left" Margin="106,362,0,0" VerticalAlignment="Top" Width="282"/>
+                            <Button x:Name="btn_ResetPassword" Content="Reset Password" HorizontalAlignment="Left" Height="28" Margin="276,329,0,0" VerticalAlignment="Top" Width="112" Click="btnResetPassword_Click" Foreground="#FF557598" Background="{x:Null}" BorderBrush="#FF557598"/>
+                            <Grid x:Name="grid_pwreset" HorizontalAlignment="Left" Height="436" Margin="431,0,0,-16" VerticalAlignment="Top" Width="209" Background="#FF557598">
+                                <PasswordBox x:Name="pwb_OldPassword"  HorizontalAlignment="Left" Margin="42,153,0,0" VerticalAlignment="Top" Width="124" BorderBrush="Black"/>
+                                <PasswordBox x:Name="pwd_NewPass1" HorizontalAlignment="Left" Margin="42,193,0,0" VerticalAlignment="Top" Width="124" BorderBrush="Black"/>
+                                <PasswordBox x:Name="pwd_NewPassRep" HorizontalAlignment="Left" Margin="42,232,0,0" VerticalAlignment="Top" Width="124" BorderBrush="Black"/>
+                                <Label Content="Old Password" HorizontalAlignment="Left" Margin="42,128,0,0" VerticalAlignment="Top" Foreground="White"/>
+                                <Label Content="New Password" HorizontalAlignment="Left" Margin="42,171,0,0" VerticalAlignment="Top" Foreground="White"/>
+                                <Label Content="Repeat Password" HorizontalAlignment="Left" Margin="42,211,0,0" VerticalAlignment="Top" Foreground="White"/>
+                                <Button x:Name="btn_ConfResetPass" Content="Reset" HorizontalAlignment="Left" Margin="66,259,0,0" VerticalAlignment="Top" Width="75" Click="btn_ConfResetPass_Click" Background="{x:Null}" BorderBrush="White" Foreground="White"/>
+                                <Label x:Name="lbl_PWResult" Content="" HorizontalAlignment="Left" Margin="24,284,0,0" VerticalAlignment="Top" Width="158" Foreground="White"/>
+                            </Grid>
+                            <Button x:Name="btn_MyProfile_Back" Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102" BorderBrush="#FF3B91E3" Background="{x:Null}" Foreground="#FF569AF8" Click="btn_MyProfile_Back_Click" Height="30"/>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+
+            </Grid>
+        </Viewbox>
+    </Border>
+</Window>

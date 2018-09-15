@@ -1,0 +1,1 @@
+﻿SELECT Products.ProductName FROM Products INNER JOIN (Orders INNER JOIN Orderlines ON Orders.OrderID = Orderlines.OrderID) ON Products.ProductID = Orderlines.ProductID GROUP BY Orders.DeliveryDate, Products.ProductName HAVING (((Orders.DeliveryDate)=#2/12/2018#));

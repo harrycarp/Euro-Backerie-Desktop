@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:EuroBakerieAPp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/EuroBakerieAPp;component/Resources/ScrollViewerStyle.xaml" />
+                <ResourceDictionary Source="/EuroBakerieAPp;component/Resources/DataGridStyle.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
     </Application.Resources>
 </Application>
